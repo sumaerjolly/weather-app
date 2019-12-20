@@ -1,4 +1,5 @@
 import './style.css';
+
 const iconElement = document.querySelector('.weather-icon');
 const tempElement = document.querySelector('.temperature-value p');
 const descElement = document.querySelector('.temperature-description p');
@@ -8,7 +9,7 @@ const notificationElement = document.querySelector('.notification');
 const weather = {};
 
 weather.temperature = {
-  unit: 'celsius'
+  unit: 'celsius',
 };
 
 const KELVIN = 273;
@@ -23,25 +24,25 @@ function displayWeather() {
 }
 
 function getWeather(city) {
-  let api = `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
+  const api = `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
   fetch(api)
-    .then(function(response) {
-      let data = response.json();
+    .then((response) => {
+      const data = response.json();
       return data;
     })
-    .then(function(data) {
+    .then((data) => {
       weather.temperature.value = Math.floor(data.main.temp - KELVIN);
       weather.iconId = data.weather[0].icon;
       weather.description = data.weather[0].description;
       weather.city = data.name;
       weather.country = data.sys.country;
     })
-    .then(function() {
+    .then(() => {
       displayWeather();
     })
-    .catch(function() {
+    .catch(() => {
       notificationElement.style.display = 'block';
-      notificationElement.innerHTML = `<p> Please check your Location and try again </p>`;
+      notificationElement.innerHTML = '<p> Please check your Location and try again </p>';
       document.querySelector('.location-search').value = '';
     });
 }
@@ -62,10 +63,12 @@ function celsiusToFahrenheit(temperature) {
   return (temperature * 9) / 5 + 32;
 }
 
-tempElement.addEventListener('click', function() {
+// celsius to farenheit and farenheit to celsius is on click
+
+tempElement.addEventListener('click', () => {
   if (weather.temperature.value === undefined) return;
 
-  if (weather.temperature.unit == 'celsius') {
+  if (weather.temperature.unit === 'celsius') {
     let fahrenheit = celsiusToFahrenheit(weather.temperature.value);
     fahrenheit = Math.floor(fahrenheit);
 
