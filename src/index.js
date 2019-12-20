@@ -15,7 +15,7 @@ weather.temperature = {
 const KELVIN = 273;
 const key = '99f15a158a869cfdd635370f80c21b6b';
 
-function displayWeather() {
+const displayWeather = () => {
   iconElement.innerHTML = `<img src="../src/icons/${weather.iconId}.png"/>`;
   tempElement.innerHTML = `${weather.temperature.value}°<span>C</span>`;
   descElement.innerHTML = weather.description;
@@ -23,7 +23,7 @@ function displayWeather() {
   notificationElement.style.display = 'none';
 }
 
-function getWeather(city) {
+const getWeather = (city) => {
   const api = `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
   fetch(api)
     .then((response) => {
@@ -47,19 +47,19 @@ function getWeather(city) {
     });
 }
 
-function setPosition() {
+const setPosition = () => {
   const city = document.querySelector('.location-search').value.toLowerCase();
   getWeather(city);
 }
 
-function getCity() {
+const getCity = () => {
   const submitButton = document.querySelector('.location-button');
   submitButton.addEventListener('click', setPosition);
 }
 
 getCity();
 
-function celsiusToFahrenheit(temperature) {
+const celsiusToFahrenheit = (temperature) => {
   return (temperature * 9) / 5 + 32;
 }
 
