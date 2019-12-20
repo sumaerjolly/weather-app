@@ -22,7 +22,18 @@ if ('geolocation' in navigator) {
 }
 function getWeather(latitude, longitude) {
   let api = `api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`;
-  console.log(api);
+  fetch(api)
+    .then(function(response) {
+      let response = response.json();
+      return response;
+    })
+    .then(function(response) {
+      weather.temperature.value = Math.floor(response.main.temp - KELVIN);
+      weather.iconId = response.weather[0].icon;
+      weather.description = response.weather[0].description;
+      weather.city = response.name;
+      weather.country = response.country;
+    });
 }
 
 function setPosition(position) {
