@@ -20,6 +20,9 @@ if ('geolocation' in navigator) {
   notificationElement.style.display = 'block';
   notificationElement.innerHTML = "<p>Browser doesn't Support Geolocation</p>";
 }
+
+function displayWeather() {}
+
 function getWeather(latitude, longitude) {
   let api = `api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`;
   fetch(api)
@@ -32,7 +35,10 @@ function getWeather(latitude, longitude) {
       weather.iconId = response.weather[0].icon;
       weather.description = response.weather[0].description;
       weather.city = response.name;
-      weather.country = response.country;
+      weather.country = response.sys.country;
+    })
+    .then(function() {
+      displayWeather();
     });
 }
 
