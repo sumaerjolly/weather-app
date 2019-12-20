@@ -13,3 +13,11 @@ weather.temperature = {
 
 const KELVIN = 273;
 const key = '99f15a158a869cfdd635370f80c21b6b';
+
+if ('gelocation' in navigator) {
+  navigator.geolocation.getCurrentPosition(setPosition, showError);
+} else {
+  notificationElement.style.display = 'block';
+  notificationElement.innerHTML =
+    "<p> Browser doesn't Support Geolocation </p>";
+}
