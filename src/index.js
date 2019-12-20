@@ -14,42 +14,65 @@ weather.temperature = {
 const KELVIN = 273;
 const key = '99f15a158a869cfdd635370f80c21b6b';
 
-if ('geolocation' in navigator) {
-  navigator.geolocation.getCurrentPosition(setPosition, showError);
-} else {
-  notificationElement.style.display = 'block';
-  notificationElement.innerHTML = "<p>Browser doesn't Support Geolocation</p>";
+function displayWeather() {
+  iconElement.innerHTML = `<img src="../src/icons/${weather.iconId}.png"/>`;
+  tempElement.innerHTML = `${weather.temperature.value}°<span>C</span>`;
+  descElement.innerHTML = weather.description;
+  locationElement.innerHTML = `${weather.city}, ${weather.country}`;
+  notificationElement.style.display = 'none';
 }
 
-function displayWeather() {}
-
-function getWeather(latitude, longitude) {
-  let api = `api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`;
+function getWeather(city) {
+  let api = `https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}`;
   fetch(api)
     .then(function(response) {
-      let response = response.json();
-      return response;
+      let data = response.json();
+      return data;
     })
-    .then(function(response) {
-      weather.temperature.value = Math.floor(response.main.temp - KELVIN);
-      weather.iconId = response.weather[0].icon;
-      weather.description = response.weather[0].description;
-      weather.city = response.name;
-      weather.country = response.sys.country;
+    .then(function(data) {
+      weather.temperature.value = Math.floor(data.main.temp - KELVIN);
+      weather.iconId = data.weather[0].icon;
+      weather.description = data.weather[0].description;
+      weather.city = data.name;
+      weather.country = data.sys.country;
     })
     .then(function() {
       displayWeather();
+    })
+    .catch(function() {
+      notificationElement.style.display = 'block';
+      notificationElement.innerHTML = `<p> Please check your Location and try again </p>`;
+      document.querySelector('.location-search').value = '';
     });
 }
 
-function setPosition(position) {
-  let latitude = position.coords.latitude;
-  let longitude = position.coords.longitude;
-
-  getWeather(latitude, longitude);
+function setPosition() {
+  const city = document.querySelector('.location-search').value.toLowerCase();
+  getWeather(city);
 }
 
-function showError(error) {
-  notificationElement.style.display = 'block';
-  notificationElement.innerHTML = `<p> ${error.message} </p>`;
+function getCity() {
+  const submitButton = document.querySelector('.location-button');
+  submitButton.addEventListener('click', setPosition);
 }
+
+getCity();
+
+function celsiusToFahrenheit(temperature) {
+  return (temperature * 9) / 5 + 32;
+}
+
+tempElement.addEventListener('click', function() {
+  if (weather.temperature.value === undefined) return;
+
+  if (weather.temperature.unit == 'celsius') {
+    let fahrenheit = celsiusToFahrenheit(weather.temperature.value);
+    fahrenheit = Math.floor(fahrenheit);
+
+    tempElement.innerHTML = `${fahrenheit}°<span>F</span>`;
+    weather.temperature.unit = 'fahrenheit';
+  } else {
+    tempElement.innerHTML = `${weather.temperature.value}°<span>C</span>`;
+    weather.temperature.unit = 'celsius';
+  }
+});

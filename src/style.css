@@ -5,6 +5,7 @@ body {
 .container {
   width: 300px;
   background-color: #fff;
+  height: 400px;
 
   display: block;
   margin: 0 auto;
@@ -70,15 +71,9 @@ body {
   cursor: pointer;
 }
 
-.temperature-value p:hover {
-}
-
 .temperature-value span {
   color: #293251;
   font-size: 0.5em;
-}
-
-.temperature-description {
 }
 
 .temperature-description p {
@@ -89,13 +84,35 @@ body {
   font-size: 1.2em;
 }
 
-.location {
-}
-
 .location p {
   margin: 0;
   padding: 0;
   color: #293251;
   text-align: center;
   font-size: 1.2em;
+}
+
+.location-search {
+  /* margin-top: 12px; */
+  display: block;
+  width: 90%;
+  height: 20px;
+  margin: 15px auto;
+  border-radius: 5px;
+}
+
+.location-button {
+  margin: 0 auto;
+  background-color: #293251;
+  border: none;
+  color: white;
+  padding: 5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+}
+.centering {
+  text-align: center;
 }
