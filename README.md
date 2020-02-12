@@ -2,7 +2,7 @@
 
 This project is part of a series of projects to be completed by students of [Microverse](https://www.microverse.org/ 'The Global School for Remote Software Developers!').
 
-Book Library is an individual project by [Sumaer Jolly](https://github.com/sumaerjolly). The full project description can be found [here](https://www.theodinproject.com/courses/javascript/lessons/weather-app).
+Weather App is an individual project by [Sumaer Jolly](https://github.com/sumaerjolly). The full project description can be found [here](https://www.theodinproject.com/courses/javascript/lessons/weather-app).
 
 ## Built With
 
